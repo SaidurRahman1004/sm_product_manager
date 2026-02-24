@@ -73,4 +73,8 @@ class AppStrings {
   static const String inputActive = 'Active';
   static const String inputWeight = 'Weight';
   static const String colors = 'Colors';
+  //error
+  static const String netError = 'Network error or timeout';
+  static const String netErrorImg = 'Network error or Image upload failed';
+
 }
