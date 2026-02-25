@@ -76,5 +76,8 @@ class AppStrings {
   //error
   static const String netError = 'Network error or timeout';
   static const String netErrorImg = 'Network error or Image upload failed';
+  static const String error = 'Error';
+  static const String emailError = 'Please enter your email';
+  static const String success = 'Success';
 
 }

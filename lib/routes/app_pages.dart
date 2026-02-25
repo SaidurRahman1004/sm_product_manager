@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../auth/auth_controller.dart';
 import '../controllers/onboarding/onboarding_controller.dart';
 import '../controllers/onboarding/splash_controller.dart';
 import 'app_routes.dart';
@@ -27,6 +28,21 @@ class AppPages {
       binding: BindingsBuilder(() {
         Get.lazyPut<OnboardingController>(() => OnboardingController());
       }),
+    ),
+    GetPage(
+      name: AppRoutes.forgotPassword,
+      page: () => ForgotPasswordScreen(),
+      binding: BindingsBuilder(() {
+        Get.put(AuthController());
+      }),
+    ),
+    GetPage(
+      name: AppRoutes.verifyOtp,
+      page: () => VerifyOtpScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.resetPassword,
+      page: () => ResetPasswordScreen(),
     ),
   ];
 }
