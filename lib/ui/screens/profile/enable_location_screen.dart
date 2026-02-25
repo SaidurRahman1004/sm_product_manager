@@ -19,9 +19,9 @@ class EnableLocationScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(AppSizes.paddingLg),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
             children: [
-              const Spacer(),
+
 
               Image.asset(AppAssets.map, height: 80.h, width: 80.w),
 
@@ -45,7 +45,7 @@ class EnableLocationScreen extends StatelessWidget {
                 ),
               ),
 
-              const Spacer(),
+              SizedBox(height: 40.h),
               CustomButton(
                 text: AppStrings.btnEnable,
                 onPressed: () {

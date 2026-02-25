@@ -49,14 +49,13 @@ class SelectLanguageScreen extends StatelessWidget {
               ),
               SizedBox(height: 24.h),
               Expanded(
-                child: Obx(
-                  () => ListView.builder(
-                    itemCount: controller.languages.length,
-                    itemBuilder: (context, index) {
-                      final lang = controller.languages[index];
+                child: ListView.builder(
+                  itemCount: controller.languages.length,
+                  itemBuilder: (context, index) {
+                    final lang = controller.languages[index];
+                    return Obx(() {
                       final isSelected =
                           controller.selectedLanguage.value?.name == lang.name;
-
                       return GestureDetector(
                         onTap: () => controller.selectedLanguage.value = lang,
                         child: Container(
@@ -85,6 +84,13 @@ class SelectLanguageScreen extends StatelessWidget {
                                 lang.flagAsset,
                                 width: 32.w,
                                 height: 32.h,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Icon(
+                                    Icons.flag_circle,
+                                    size: 32.w,
+                                    color: AppColors.primaryBlue,
+                                  );
+                                },
                               ),
                               SizedBox(width: 16.w),
                               Expanded(
@@ -104,8 +110,8 @@ class SelectLanguageScreen extends StatelessWidget {
                           ),
                         ),
                       );
-                    },
-                  ),
+                    });
+                  },
                 ),
               ),
               CustomButton(

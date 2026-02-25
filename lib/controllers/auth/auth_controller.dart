@@ -41,10 +41,14 @@ class AuthController extends GetxController {
         hasMinLength.value = false;
       }
 
-      if (strength == 1) strengthText.value = 'Weak';
-      else if (strength == 2) strengthText.value = 'Fair';
-      else if (strength == 3) strengthText.value = 'Good';
-      else if (strength >= 4) strengthText.value = 'Strong';
+      if (strength == 1)
+        strengthText.value = 'Weak';
+      else if (strength == 2)
+        strengthText.value = 'Fair';
+      else if (strength == 3)
+        strengthText.value = 'Good';
+      else if (strength >= 4)
+        strengthText.value = 'Strong';
     }
     passwordStrength.value = strength;
   }
@@ -184,17 +188,6 @@ class AuthController extends GetxController {
       return;
     }
 
-    //  Registration otp mock
-    if (isFromRegister) {
-      _showDynamicSuccessDialog(
-        title: AppStrings.registerSuccessHeading,
-        subtitle: AppStrings.registerSuccessSub,
-        iconPath: AppAssets.successSignIn,
-      );
-      return;
-    }
-
-    //  OTP verification for forget password
     isLoading.value = true;
     try {
       final response = await _apiClient.post(
@@ -205,7 +198,15 @@ class AuthController extends GetxController {
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 200 && data['success'] == true) {
-        Get.toNamed(AppRoutes.resetPassword);
+        if (isFromRegister) {
+          _showDynamicSuccessDialog(
+            title: AppStrings.registerSuccessHeading,
+            subtitle: AppStrings.registerSuccessSub,
+            iconPath: AppAssets.successSignIn,
+          );
+        } else {
+          Get.toNamed(AppRoutes.resetPassword);
+        }
       } else {
         _showMessage(
           AppStrings.error,
