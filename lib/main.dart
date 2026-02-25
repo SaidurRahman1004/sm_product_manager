@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sm_product_manager/routes/app_pages.dart';
-import 'package:sm_product_manager/ui/screens/splash/splash_screen.dart';
 
 import 'core/constants/app_colors.dart';
 import 'data/data_sources/local/shared_prefs_helper.dart';

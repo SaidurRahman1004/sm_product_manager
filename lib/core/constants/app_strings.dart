@@ -114,4 +114,14 @@ class AppStrings {
   static const String inputActive = 'Active';
   static const String inputWeight = 'Weight';
   static const String colors = 'Colors';
+  static const String cancel= 'Cancel';
+  static const String logout= 'Logout';
+//Profile
+  static const String profile = 'Profile';
+  static const String editProfile = 'Edit Profile';
+  static const String support = 'Support';
+  static const String privacy = 'Privacy';
+  static const String unknownUser = 'Unknown User';
+  static const String logoutSub = 'Are you sure you want to logout?';
+
 }

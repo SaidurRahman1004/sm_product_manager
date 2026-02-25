@@ -51,7 +51,7 @@ class AuthController extends GetxController {
         final String token = data['data']['token'];
         await SharedPrefsHelper.saveToken(token);
         _showMessage(AppStrings.success, 'Logged in successfully!');
-        Get.offAllNamed(AppRoutes.home);
+        Get.offAllNamed(AppRoutes.enableLocation);
       } else {
         _showMessage(
           AppStrings.error,
