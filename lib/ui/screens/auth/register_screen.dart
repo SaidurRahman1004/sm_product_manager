@@ -9,7 +9,7 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/custom_textfield.dart';
 
 class RegisterScreen extends StatefulWidget {
-  RegisterScreen({super.key});
+  const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
