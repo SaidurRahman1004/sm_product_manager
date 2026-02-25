@@ -39,9 +39,6 @@ class ProductController extends GetxController {
     if (success) {
       // Refresh list
       await fetchProducts();
-      Get.snackbar(AppStrings.success, 'Product created successfully');
-    } else {
-      Get.snackbar(AppStrings.error, 'Failed to create product');
     }
     isActionLoading.value = false;
     return success;
@@ -54,9 +51,6 @@ class ProductController extends GetxController {
     if (success) {
       // Refresh list
       await fetchProducts();
-      Get.snackbar(AppStrings.success, 'Product updated successfully');
-    } else {
-      Get.snackbar(AppStrings.error, 'Failed to update product');
     }
     isActionLoading.value = false;
     return success;

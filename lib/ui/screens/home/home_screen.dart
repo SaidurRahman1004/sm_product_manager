@@ -14,9 +14,8 @@ import '../../widgets/product_card.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  final ProductController productController = Get.find<ProductController>();
-  final ProfileController profileController = Get.find<ProfileController>();
-
+  final ProductController productController = Get.put(ProductController());
+  final ProfileController profileController = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

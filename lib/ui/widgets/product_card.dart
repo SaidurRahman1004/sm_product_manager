@@ -146,18 +146,25 @@ class ProductCard extends StatelessWidget {
                 SizedBox(height: 12.h),
                 // Action Buttons
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildSmallButton(
-                      AppStrings.viewDetails,
-                      onViewDetails,
-                      isOutlined: true,
+                    Expanded(
+                      flex: 5,
+                      child: _buildSmallButton(
+                        AppStrings.viewDetails,
+                        onViewDetails,
+                        isOutlined: true,
+                      ),
                     ),
-                    _buildSmallButton(
-                      AppStrings.edit,
-                      onEdit,
-                      isOutlined: false,
+                    SizedBox(width: 6.w),
+                    Expanded(
+                      flex: 3,
+                      child: _buildSmallButton(
+                        AppStrings.edit,
+                        onEdit,
+                        isOutlined: false,
+                      ),
                     ),
+
                   ],
                 ),
               ],
@@ -177,7 +184,8 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 6.h),
         decoration: BoxDecoration(
           color: isOutlined
               ? Colors.transparent
@@ -185,12 +193,16 @@ class ProductCard extends StatelessWidget {
           border: isOutlined ? Border.all(color: AppColors.inputBorder) : null,
           borderRadius: BorderRadius.circular(AppSizes.radiusRound),
         ),
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w600,
-            color: isOutlined ? AppColors.primaryBlue : AppColors.textGrey,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            text,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w600,
+              color: isOutlined ? AppColors.primaryBlue : AppColors.textGrey,
+            ),
           ),
         ),
       ),

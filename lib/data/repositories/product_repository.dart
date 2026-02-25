@@ -15,12 +15,18 @@ class ProductRepository {
 
     if (isOnline) {
       try {
-        final response = await _apiClient.get(ApiConstants.baseUrl + ApiConstants.products);
+        final response = await _apiClient.get(
+          ApiConstants.baseUrl + ApiConstants.products,
+        );
         final data = jsonDecode(response.body);
 
-        if (response.statusCode == 200 && data['success'] == true) {
+        // Updated validation for API response
+        if (response.statusCode == 200 &&
+            (data['success'] == true || data['status'] == 'success')) {
           final List<dynamic> productsJson = data['data'];
-          final List<ProductModel> products = productsJson.map((json) => ProductModel.fromJson(json)).toList();
+          final List<ProductModel> products = productsJson
+              .map((json) => ProductModel.fromJson(json))
+              .toList();
 
           // save local cache for offline use
           await SqfliteHelper.cacheProducts(products);
@@ -39,7 +45,10 @@ class ProductRepository {
   }
 
   // create Product
-  Future<bool> createProduct(Map<String, dynamic> productData, File imageFile) async {
+  Future<bool> createProduct(
+    Map<String, dynamic> productData,
+    File? imageFile,
+  ) async {
     try {
       final response = await _apiClient.multipartRequest(
         ApiConstants.baseUrl + ApiConstants.products,
@@ -49,14 +58,19 @@ class ProductRepository {
         fileKey: 'image',
       );
       final data = jsonDecode(response.body);
-      return (response.statusCode == 201 || response.statusCode == 200) && data['success'] == true;
+      return (response.statusCode == 201 || response.statusCode == 200) &&
+          (data['success'] == true || data['status'] == 'success');
     } catch (e) {
       return false;
     }
   }
 
   // update
-  Future<bool> updateProduct(String productId, Map<String, dynamic> productData, File? imageFile) async {
+  Future<bool> updateProduct(
+    String productId,
+    Map<String, dynamic> productData,
+    File? imageFile,
+  ) async {
     try {
       final response = await _apiClient.multipartRequest(
         '${ApiConstants.baseUrl}${ApiConstants.products}/$productId',
@@ -66,7 +80,8 @@ class ProductRepository {
         fileKey: 'image', // File upload key
       );
       final data = jsonDecode(response.body);
-      return response.statusCode == 200 && data['success'] == true;
+      return response.statusCode == 200 &&
+          (data['success'] == true || data['status'] == 'success');
     } catch (e) {
       return false;
     }
@@ -75,9 +90,12 @@ class ProductRepository {
   // Delete
   Future<bool> deleteProduct(String productId) async {
     try {
-      final response = await _apiClient.delete('${ApiConstants.baseUrl}${ApiConstants.products}/$productId');
+      final response = await _apiClient.delete(
+        '${ApiConstants.baseUrl}${ApiConstants.products}/$productId',
+      );
       final data = jsonDecode(response.body);
-      return response.statusCode == 200 && data['success'] == true;
+      return response.statusCode == 200 &&
+          (data['success'] == true || data['status'] == 'success');
     } catch (e) {
       return false;
     }

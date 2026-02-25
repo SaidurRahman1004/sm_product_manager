@@ -112,8 +112,7 @@ class ProfileScreen extends StatelessWidget {
                   title: AppStrings.privacy,
                   onTap: () {},
                 ),
-
-                const Spacer(),
+                SizedBox(height: 16.h),
 
                 //Logout Button
                 ListTile(
@@ -153,8 +152,11 @@ class ProfileScreen extends StatelessWidget {
           fontWeight: FontWeight.w500,
         ),
       ),
-      trailing:
-      const Icon(Icons.arrow_forward_ios, color: AppColors.textGrey, size: 16),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        color: AppColors.textGrey,
+        size: 16,
+      ),
       onTap: onTap,
     );
   }

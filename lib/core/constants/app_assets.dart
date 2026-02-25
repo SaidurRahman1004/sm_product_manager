@@ -4,7 +4,7 @@ class AppAssets {
 
   // Images
   static const String bulbSignIn = '$_imagePath/bulbSignIn1.png';
-  static const String congratulations = '$_imagePath/Congratulations.png';
+  static const String congratulations = '$_imagePath/congratulations.png';
   static const String fanProduct = '$_imagePath/fanProduct.png';
   static const String headphoneProduct = '$_imagePath/HeadphoneProduct.png';
   static const String lightProduct = '$_imagePath/lightProduct.png';

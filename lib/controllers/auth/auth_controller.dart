@@ -198,6 +198,10 @@ class AuthController extends GetxController {
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 200 && data['success'] == true) {
+        if (data['data'] != null && data['data']['token'] != null) {
+          await SharedPrefsHelper.saveToken(data['data']['token']);
+        }
+
         if (isFromRegister) {
           _showDynamicSuccessDialog(
             title: AppStrings.registerSuccessHeading,

@@ -11,7 +11,7 @@ import '../../widgets/custom_textfield.dart';
 class SetupProfileScreen extends StatelessWidget {
   SetupProfileScreen({super.key});
 
-  final ProfileSetupController controller = Get.find<ProfileSetupController>();
+  final ProfileSetupController controller = Get.put(ProfileSetupController());
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +57,7 @@ class SetupProfileScreen extends StatelessWidget {
               CustomTextField(
                 label: AppStrings.aboutUs,
                 controller: controller.aboutUsController,
+                maxline: 5,
               ),
               SizedBox(height: 16.h),
 
@@ -77,7 +78,9 @@ class SetupProfileScreen extends StatelessWidget {
                   child: CustomTextField(
                     label: AppStrings.dateOfBirth,
                     controller: controller.dobController,
-                    hintText: 'YYYY-MM-DD',
+                    hintText: 'Date of Birth',
+                    suffixIcon: Icons.date_range,
+
                   ),
                 ),
               ),
@@ -106,7 +109,7 @@ class SetupProfileScreen extends StatelessWidget {
                 ),
               )),
 
-              SizedBox(height: 40.h),
+              SizedBox(height: 80.h),
               Obx(() => CustomButton(
                 text: AppStrings.btnNext,
                 isLoading: controller.isLoading.value,

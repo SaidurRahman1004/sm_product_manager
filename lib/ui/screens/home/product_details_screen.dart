@@ -14,7 +14,7 @@ import '../../widgets/custom_button.dart';
 class ProductDetailsScreen extends StatelessWidget {
   ProductDetailsScreen({super.key});
 
-  final ProductController controller = Get.find<ProductController>();
+  final ProductController controller = Get.put(ProductController());
 
   @override
   Widget build(BuildContext context) {

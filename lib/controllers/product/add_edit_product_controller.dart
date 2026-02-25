@@ -67,6 +67,26 @@ class AddEditProductController extends GetxController {
     }
   }
 
+  //feild clear methode
+  void _clearFields() {
+    isEditing.value = false;
+    editingProduct = null;
+    nameController.clear();
+    descriptionController.clear();
+    priceController.clear();
+    brandController.clear();
+    discountController.clear();
+    stockController.clear();
+    tagsController.clear();
+    weightController.clear();
+    colorsController.clear();
+    dimensionsController.clear();
+    selectedCategory.value = 'Electronics';
+    isActive.value = 'Active';
+    imageFile.value = null;
+    existingImageUrl.value = '';
+  }
+
   Future<void> submit() async {
     if (nameController.text.isEmpty || priceController.text.isEmpty) {
       Get.snackbar(
@@ -125,6 +145,29 @@ class AddEditProductController extends GetxController {
 
     if (success) {
       Get.back();
+      _clearFields();
+      Get.delete<AddEditProductController>();
+      Future.delayed(const Duration(milliseconds: 300), () {
+        Get.snackbar(
+          'Success',
+          isEditing.value
+              ? 'Product updated successfully'
+              : 'Product created successfully',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+          margin: const EdgeInsets.all(16),
+        );
+      });
+    } else {
+      Get.snackbar(
+        'Error',
+        isEditing.value
+            ? 'Failed to update product'
+            : 'Failed to create product',
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
     }
   }
 }

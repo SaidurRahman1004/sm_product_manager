@@ -63,6 +63,18 @@ class ProfileSetupController extends GetxController {
 
   // completeProfile api call
   Future<void> completeProfile() async {
+    //img validation
+    if (profileImage.value == null) {
+      Get.snackbar(
+        AppStrings.error,
+        'Please upload a profile picture',
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    // txt and dob validation
     if (dobController.text.isEmpty || aboutUsController.text.isEmpty) {
       Get.snackbar(
         AppStrings.error,
@@ -76,20 +88,28 @@ class ProfileSetupController extends GetxController {
     isLoading.value = true;
     try {
       final Map<String, dynamic> profileData = {
-        // Use the name from the selected Language object
         "country": selectedLanguage.value?.name ?? 'Not Selected',
         "aboutUs": aboutUsController.text,
         "dateOfBirth": dobController.text,
         "gender": selectedGender.value.toLowerCase(),
       };
 
-      final response = await _apiClient.multipartRequest(
-        ApiConstants.baseUrl + ApiConstants.completeProfile,
-        method: 'PUT',
-        fields: {'data': jsonEncode(profileData)},
-        imageFile: profileImage.value,
-        fileKey: 'image',
-      );
+      final url = ApiConstants.baseUrl + ApiConstants.completeProfile;
+      dynamic response;
+
+      if (profileImage.value == null) {
+        // If no image send a regular PUT request with JSON body
+        response = await _apiClient.put(url, body: profileData);
+      } else {
+        // If image exists send a multipart request
+        response = await _apiClient.multipartRequest(
+          url,
+          method: 'PUT',
+          fields: {'data': jsonEncode(profileData)},
+          imageFile: profileImage.value,
+          fileKey: 'image',
+        );
+      }
 
       final data = jsonDecode(response.body);
 
@@ -106,7 +126,7 @@ class ProfileSetupController extends GetxController {
     } catch (e) {
       Get.snackbar(
         AppStrings.error,
-        AppStrings.netErrorImg,
+        'An unexpected error occurred: $e',
         backgroundColor: Colors.redAccent,
         colorText: Colors.white,
       );
@@ -125,7 +145,18 @@ class ProfileSetupController extends GetxController {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(AppAssets.congratulations, height: 80.h, width: 80.w),
+              Image.asset(
+                AppAssets.congratulations,
+                height: 80.h,
+                width: 80.w,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                    size: 80.w,
+                  );
+                },
+              ),
               const SizedBox(height: 24),
               Text(
                 AppStrings.profileSetupSuccess,
