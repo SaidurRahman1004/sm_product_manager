@@ -29,10 +29,19 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/images/icon/sm_icon.png"
+
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/images/icon/
+    - assets/images/country/
 
 
   # https://flutter.dev/to/resolution-aware-images
