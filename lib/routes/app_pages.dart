@@ -2,12 +2,17 @@ import 'package:get/get.dart';
 import '../controllers/auth/auth_controller.dart';
 import '../controllers/onboarding/onboarding_controller.dart';
 import '../controllers/onboarding/splash_controller.dart';
+import '../controllers/product/add_edit_product_controller.dart';
+import '../controllers/product/product_controller.dart';
+import '../controllers/profile/profile_controller.dart';
 import '../ui/screens/auth/forgot_password_screen.dart';
 import '../ui/screens/auth/login_screen.dart';
 import '../ui/screens/auth/register_screen.dart';
 import '../ui/screens/auth/reset_password_screen.dart';
 import '../ui/screens/auth/verify_otp_screen.dart';
 import '../ui/screens/home/add_edit_product_screen.dart';
+import '../ui/screens/home/home_screen.dart';
+import '../ui/screens/home/product_details_screen.dart';
 import '../ui/screens/profile/enable_location_screen.dart';
 import '../ui/screens/profile/profile_screen.dart';
 import '../ui/screens/profile/select_language_screen.dart';
@@ -15,9 +20,6 @@ import '../ui/screens/profile/setup_profile_screen.dart';
 import 'app_routes.dart';
 import '../ui/screens/splash/splash_screen.dart';
 import '../ui/screens/splash/onboarding_screen.dart';
-
-
-
 
 class AppPages {
   // initial routs when app start
@@ -81,6 +83,25 @@ class AppPages {
     GetPage(
       name: AppRoutes.addEditProduct,
       page: () => AddEditProductScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.home,
+      page: () => HomeScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<ProductController>(() => ProductController());
+        Get.lazyPut<ProfileController>(() => ProfileController());
+      }),
+    ),
+    GetPage(
+      name: AppRoutes.productDetails,
+      page: () => ProductDetailsScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.addEditProduct,
+      page: () => AddEditProductScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<AddEditProductController>(() => AddEditProductController());
+      }),
     ),
   ];
 }

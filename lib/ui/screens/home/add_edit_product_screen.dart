@@ -12,9 +12,7 @@ import '../../widgets/custom_button.dart';
 class AddEditProductScreen extends StatelessWidget {
   AddEditProductScreen({super.key});
 
-  final AddEditProductController controller = Get.put(
-    AddEditProductController(),
-  );
+  final AddEditProductController controller = Get.find<AddEditProductController>();
 
   @override
   Widget build(BuildContext context) {
