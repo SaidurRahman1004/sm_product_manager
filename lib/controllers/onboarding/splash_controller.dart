@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../data/data_sources/local/shared_prefs_helper.dart';
+import '../../routes/app_routes.dart';
 
 class SplashController extends GetxController {
   @override
@@ -14,12 +15,9 @@ class SplashController extends GetxController {
     await Future.delayed(const Duration(seconds: 3));
     final token = SharedPrefsHelper.getToken();
     if (token != null && token.isNotEmpty) {
-      print('Home'); //tmp
-      //Get.offAll(() => const HomeScreen());
-      return;
+      Get.offAllNamed(AppRoutes.home);
     } else {
-      print("Go to Onboarding"); //tmp
-      //print("Go to Onboarding");
+      Get.offAllNamed(AppRoutes.onboarding);
     }
   }
 }
