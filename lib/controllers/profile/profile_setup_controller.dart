@@ -88,6 +88,7 @@ class ProfileSetupController extends GetxController {
     isLoading.value = true;
     try {
       final Map<String, dynamic> profileData = {
+        "fullName": "User Name", // Required by API
         "country": selectedLanguage.value?.name ?? 'Not Selected',
         "aboutUs": aboutUsController.text,
         "dateOfBirth": dobController.text,
@@ -113,14 +114,29 @@ class ProfileSetupController extends GetxController {
 
       final data = jsonDecode(response.body);
 
-      if (response.statusCode == 200 && data['success'] == true) {
+      // Handle success
+      if (response.statusCode == 200 &&
+          (data['success'] == true || data['status'] == 'success')) {
         _showSuccessDialog();
       } else {
+        // Advanced Error Extractor
+        String errorDetails = '';
+        if (data['errorSources'] != null) {
+          errorDetails = data['errorSources'].toString();
+        } else if (data['errors'] != null) {
+          errorDetails = data['errors'].toString();
+        } else if (data['error'] != null) {
+          errorDetails = data['error'].toString();
+        } else if (data['message'] != null) {
+          errorDetails = data['message'].toString();
+        }
+
         Get.snackbar(
-          AppStrings.error,
-          data['message'] ?? 'Profile setup failed',
+          'Validation Error (${response.statusCode})',
+          errorDetails.isNotEmpty ? errorDetails : 'Profile setup failed',
           backgroundColor: Colors.redAccent,
           colorText: Colors.white,
+          duration: const Duration(seconds: 8),
         );
       }
     } catch (e) {
@@ -129,6 +145,7 @@ class ProfileSetupController extends GetxController {
         'An unexpected error occurred: $e',
         backgroundColor: Colors.redAccent,
         colorText: Colors.white,
+        duration: const Duration(seconds: 6),
       );
     } finally {
       isLoading.value = false;

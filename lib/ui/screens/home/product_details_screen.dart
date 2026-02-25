@@ -130,12 +130,15 @@ class ProductDetailsScreen extends StatelessWidget {
                       Expanded(
                         child: Row(
                           children: [
-                            Text(
-                              product.name ?? '',
-                              style: TextStyle(
-                                fontSize: 22.sp,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.textBlack,
+                            FittedBox(
+                              child: Text(
+                                product.name ?? '',
+                                style: TextStyle(
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.textBlack,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
                             SizedBox(width: 8.w),
@@ -347,9 +350,8 @@ class ProductDetailsScreen extends StatelessWidget {
       confirmTextColor: Colors.white,
       buttonColor: Colors.redAccent,
       onConfirm: () {
+        Get.back();
         controller.deleteProduct(id);
-        Get.back();
-        Get.back();
       },
     );
   }

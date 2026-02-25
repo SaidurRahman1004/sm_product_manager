@@ -54,7 +54,7 @@ class EnableLocationScreen extends StatelessWidget {
               ),
               SizedBox(height: 16.h),
               TextButton(
-                onPressed: () => Get.toNamed(AppRoutes.selectLanguage),
+                onPressed: () => Get.toNamed(AppRoutes.setupProfile),
                 child: Text(
                   AppStrings.btnSkip,
                   style: TextStyle(

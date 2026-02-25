@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:get/get.dart';
+import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_strings.dart';
 import '../../data/models/product_model.dart';
 import '../../data/repositories/product_repository.dart';
@@ -60,12 +61,24 @@ class ProductController extends GetxController {
   Future<void> deleteProduct(String productId) async {
     isActionLoading.value = true;
     final success = await _repository.deleteProduct(productId);
+
     if (success) {
-      // Remove pRoduct instantly from ui
       productList.removeWhere((p) => p.id == productId);
-      Get.snackbar(AppStrings.success, 'Product deleted successfully');
+      Get.back();
+      Get.snackbar(
+        AppStrings.success,
+        'Product deleted successfully',
+        backgroundColor: AppColors.successGreen,
+        colorText: AppColors.backgroundWhite,
+        snackPosition: SnackPosition.BOTTOM,
+      );
     } else {
-      Get.snackbar(AppStrings.error, 'Failed to delete product');
+      Get.snackbar(
+        AppStrings.error,
+        'Failed to delete product',
+        backgroundColor: AppColors.errorRed,
+        colorText: AppColors.backgroundWhite,
+      );
     }
     isActionLoading.value = false;
   }
