@@ -14,7 +14,6 @@ dependencies:
   shared_preferences: ^2.5.4
   sqflite: ^2.4.2
   path_provider: ^2.1.5
-  pin_code_fields: ^9.1.0
   cached_network_image: ^3.4.1
   flutter_svg: ^2.2.3
   connectivity_plus: ^7.0.0
@@ -22,6 +21,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   smooth_page_indicator: ^2.0.1
   google_fonts: ^8.0.2
+  pin_code_fields: ^9.1.0
 
 dev_dependencies:
   flutter_test:

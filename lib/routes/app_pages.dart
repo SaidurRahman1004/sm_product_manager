@@ -1,7 +1,12 @@
 import 'package:get/get.dart';
-import '../auth/auth_controller.dart';
+import '../controllers/auth/auth_controller.dart';
 import '../controllers/onboarding/onboarding_controller.dart';
 import '../controllers/onboarding/splash_controller.dart';
+import '../ui/screens/auth/forgot_password_screen.dart';
+import '../ui/screens/auth/login_screen.dart';
+import '../ui/screens/auth/register_screen.dart';
+import '../ui/screens/auth/reset_password_screen.dart';
+import '../ui/screens/auth/verify_otp_screen.dart';
 import 'app_routes.dart';
 import '../ui/screens/splash/splash_screen.dart';
 import '../ui/screens/splash/onboarding_screen.dart';
@@ -43,6 +48,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.resetPassword,
       page: () => ResetPasswordScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.login,
+      page: () => LoginScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.register,
+      page: () => RegisterScreen(),
     ),
   ];
 }
