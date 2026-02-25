@@ -7,6 +7,7 @@ import '../ui/screens/auth/login_screen.dart';
 import '../ui/screens/auth/register_screen.dart';
 import '../ui/screens/auth/reset_password_screen.dart';
 import '../ui/screens/auth/verify_otp_screen.dart';
+import '../ui/screens/home/add_edit_product_screen.dart';
 import '../ui/screens/profile/enable_location_screen.dart';
 import '../ui/screens/profile/profile_screen.dart';
 import '../ui/screens/profile/select_language_screen.dart';
@@ -76,6 +77,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.profile,
       page: () =>  ProfileScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.addEditProduct,
+      page: () => AddEditProductScreen(),
     ),
   ];
 }
