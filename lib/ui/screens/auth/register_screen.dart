@@ -8,13 +8,37 @@ import '../../../core/constants/app_sizes.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_textfield.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   RegisterScreen({super.key});
 
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   final AuthController controller = Get.find<AuthController>();
+
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    passwordController.addListener(() {
+      controller.checkPasswordStrength(passwordController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +60,19 @@ class RegisterScreen extends StatelessWidget {
             children: [
               Text(
                 AppStrings.registerHeader,
-                style: TextStyle(fontSize: AppSizes.fontHeading,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textBlack),
+                style: TextStyle(
+                  fontSize: AppSizes.fontHeading,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textBlack,
+                ),
               ),
               SizedBox(height: 8.h),
               Text(
                 AppStrings.registerSubHeader,
                 style: TextStyle(
-                    fontSize: AppSizes.fontBody, color: AppColors.textGrey),
+                  fontSize: AppSizes.fontBody,
+                  color: AppColors.textGrey,
+                ),
               ),
               SizedBox(height: 32.h),
 
@@ -64,50 +92,103 @@ class RegisterScreen extends StatelessWidget {
                 controller: passwordController,
                 isPassword: true,
               ),
-
-              SizedBox(height: 8.h),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                      Icons.check_circle_outline, color: AppColors.successGreen,
-                      size: 16.sp),
-                  SizedBox(width: 8.w),
-                  Expanded(
-                    child: Text(
-                      AppStrings.passwordRule,
-                      style: TextStyle(fontSize: AppSizes.fontSmall,
-                          color: AppColors.successGreen),
+              //Password Strength Indicator
+              SizedBox(height: 12.h),
+              Obx(
+                () => Row(
+                  children: [
+                    // 4 baR Indicator
+                    ...List.generate(4, (index) {
+                      return Expanded(
+                        child: Container(
+                          height: 4.h,
+                          margin: EdgeInsets.only(right: 6.w),
+                          decoration: BoxDecoration(
+                            color: index < controller.passwordStrength.value
+                                ? AppColors.primaryBlue
+                                : const Color(0xFFE0E0E0),
+                            borderRadius: BorderRadius.circular(2.r),
+                          ),
+                        ),
+                      );
+                    }),
+                    // Strength Text
+                    SizedBox(width: 8.w),
+                    Text(
+                      controller.strengthText.value,
+                      style: TextStyle(
+                        color: AppColors.primaryBlue,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.sp,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 12.h),
+
+              // Validation Rule Text
+              Obx(
+                () => Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      controller.hasMinLength.value
+                          ? Icons.check_circle
+                          : Icons.check_circle_outline,
+                      color: controller.hasMinLength.value
+                          ? AppColors.successGreen
+                          : AppColors.successGreen,
+                      size: 16.sp,
+                    ),
+                    SizedBox(width: 8.w),
+                    Expanded(
+                      child: Text(
+                        AppStrings.passwordRule,
+                        style: TextStyle(
+                          fontSize: AppSizes.fontSmall,
+                          color: AppColors.successGreen,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               SizedBox(height: 32.h),
-
-              Obx(() =>
-                  CustomButton(
-                    text: AppStrings.btnSignUp,
-                    isLoading: controller.isLoading.value,
-                    onPressed: () {
-                      controller.register(nameController.text.trim(),
-                          emailController.text.trim(), passwordController.text);
-                    },
-                  )),
+              //button
+              Obx(
+                () => CustomButton(
+                  text: AppStrings.btnSignUp,
+                  isLoading: controller.isLoading.value,
+                  onPressed: () {
+                    controller.register(
+                      nameController.text.trim(),
+                      emailController.text.trim(),
+                      passwordController.text,
+                    );
+                  },
+                ),
+              ),
 
               SizedBox(height: 24.h),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(AppStrings.alreadyHaveAccountPrompt,
-                      style: TextStyle(color: AppColors.textGrey)),
+                  Text(
+                    AppStrings.alreadyHaveAccountPrompt,
+                    style: TextStyle(color: AppColors.textGrey),
+                  ),
                   GestureDetector(
                     onTap: () => Get.back(),
                     child: Text(
                       AppStrings.btnSignIn,
-                      style: TextStyle(color: AppColors.primaryBlue,
-                          fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: AppColors.primaryBlue,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],

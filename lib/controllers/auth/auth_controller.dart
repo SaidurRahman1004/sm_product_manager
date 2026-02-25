@@ -15,6 +15,40 @@ class AuthController extends GetxController {
   // Stores email for otp verification
   var resetEmail = ''.obs;
 
+  // Password strength VAriables
+  var passwordStrength = 0.0.obs;
+  var strengthText = ''.obs;
+  var hasMinLength = false.obs;
+
+  // password strength Cng Logic
+  void checkPasswordStrength(String pass) {
+    double strength = 0;
+    if (pass.isEmpty) {
+      strength = 0;
+      strengthText.value = '';
+      hasMinLength.value = false;
+    } else {
+      if (pass.length >= 8) strength += 1;
+      if (pass.contains(RegExp(r'[a-zA-Z]'))) strength += 1;
+      if (pass.contains(RegExp(r'[0-9]'))) strength += 1;
+      if (pass.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) strength += 1;
+
+      if (pass.length >= 8 &&
+          pass.contains(RegExp(r'[a-zA-Z]')) &&
+          pass.contains(RegExp(r'[0-9]'))) {
+        hasMinLength.value = true;
+      } else {
+        hasMinLength.value = false;
+      }
+
+      if (strength == 1) strengthText.value = 'Weak';
+      else if (strength == 2) strengthText.value = 'Fair';
+      else if (strength == 3) strengthText.value = 'Good';
+      else if (strength >= 4) strengthText.value = 'Strong';
+    }
+    passwordStrength.value = strength;
+  }
+
   // Common snk
   void _showMessage(String title, String message, {bool isError = false}) {
     Get.snackbar(
