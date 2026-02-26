@@ -41,14 +41,15 @@ class AuthController extends GetxController {
         hasMinLength.value = false;
       }
 
-      if (strength == 1)
+      if (strength == 1) {
         strengthText.value = 'Weak';
-      else if (strength == 2)
+      } else if (strength == 2) {
         strengthText.value = 'Fair';
-      else if (strength == 3)
+      } else if (strength == 3) {
         strengthText.value = 'Good';
-      else if (strength >= 4)
+      } else if (strength >= 4) {
         strengthText.value = 'Strong';
+      }
     }
     passwordStrength.value = strength;
   }
