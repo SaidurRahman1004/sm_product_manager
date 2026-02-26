@@ -128,12 +128,23 @@ class AuthController extends GetxController {
           data['success'] == true) {
         resetEmail.value = email;
 
-        // Navigate to OTP screen for Figma flow (Mocking OTP for Registration)
+        // Navigate to OTP screen
         Get.toNamed(AppRoutes.verifyOtp, arguments: {'isFromRegister': true});
       } else {
+        String errorDetails = '';
+        if (data['errorSources'] != null) {
+          errorDetails = data['errorSources'].toString();
+        } else if (data['errors'] != null) {
+          errorDetails = data['errors'].toString();
+        } else if (data['error'] != null) {
+          errorDetails = data['error'].toString();
+        } else if (data['message'] != null) {
+          errorDetails = data['message'].toString();
+        }
+
         _showMessage(
-          AppStrings.error,
-          data['message'] ?? 'Registration failed',
+          'Registration Error (${response.statusCode})',
+          errorDetails.isNotEmpty ? errorDetails : 'Registration failed',
           isError: true,
         );
       }
